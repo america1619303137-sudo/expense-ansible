@@ -1,15 +1,24 @@
 ---
-- name: Install MySQL (MariaDB) server
+- name: Install MariaDB (MySQL) Server on Amazon Linux 2023
   hosts: mysql
   become: yes
+
   tasks:
-    - name: Install MariaDB server (MySQL equivalent)
+    - name: Install MariaDB server
       yum:
-        name: mariadb-server
+        name: mariadb105-server
         state: present
 
-    - name: Start and enable MariaDB
+    - name: Start and enable MariaDB service
       service:
         name: mariadb
         state: started
         enabled: yes
+
+    - name: Verify MariaDB service status
+      shell: systemctl is-active mariadb
+      register: mariadb_status
+
+    - name: Show MariaDB status
+      debug:
+        msg: "MariaDB service is {{ mariadb_status.stdout }}"

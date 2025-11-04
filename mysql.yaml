@@ -1,15 +1,9 @@
----
-- name: Install MySQL Server
+- name: configure mysql server
   hosts: mysql
   become: yes
   tasks:
-    - name: Install MySQL
-      yum:
-        name: mysql-server
-        state: present
+  - name: Install MySQL server
+    ansible.builtin.dnf:
+      name: mysql-server
+      state: installed  
 
-    - name: Start & enable MySQL service
-      service:
-        name: mysqld
-        state: started
-        enabled: yes

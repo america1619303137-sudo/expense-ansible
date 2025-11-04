@@ -1,9 +1,15 @@
-- name: configure mysql server
+---
+- name: Install MySQL (MariaDB) server
   hosts: mysql
   become: yes
   tasks:
-  - name: Install MySQL server
-    ansible.builtin.dnf:
-      name: mysql-server
-      state: installed  
+    - name: Install MariaDB server (MySQL equivalent)
+      yum:
+        name: mariadb-server
+        state: present
 
+    - name: Start and enable MariaDB
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
